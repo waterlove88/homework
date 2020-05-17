@@ -25,7 +25,7 @@ public class ParsingTextTest {
 	}
 
 	private void parsingTest(String text, ParsingText parsingText) {
-		if(StringUtils.isEmpty(text)) {
+		if (StringUtils.isEmpty(text)) {
 			Assert.assertEquals(parsingText.getAlphabet(), "");
 			Assert.assertEquals(parsingText.getNumber(), "");
 		} else {

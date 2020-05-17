@@ -198,10 +198,10 @@ public class CrawlerServiceTest {
 
 	private void getContentsTest(GetContentsRequest getContentsRequest, ResultMaster<GetContentsResponse> resultMaster) {
 		String quotient = resultMaster.getData().getQuotient();
-		if(getContentsRequest.getOutputBundleUnit() == 1) {
+		if (getContentsRequest.getOutputBundleUnit() == 1) {
 			Assert.assertNotNull(resultMaster.getData().getQuotient());
 			Assert.assertEquals(resultMaster.getData().getRemainder(), "");
-		} else if(quotient.length() < getContentsRequest.getOutputBundleUnit()) {
+		} else if (quotient.length() < getContentsRequest.getOutputBundleUnit()) {
 			Assert.assertEquals(resultMaster.getData().getQuotient(), "");
 			Assert.assertNotNull(resultMaster.getData().getRemainder());
 		} else {

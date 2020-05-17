@@ -8,6 +8,9 @@ import java.util.Comparator;
 
 /**
  * 데이터를 알파벳과 숫자로 파싱하는 모델 클래스
+ * <p>
+ * alphabet : 영문 추출 데이터
+ * number : 숫자 추출 데이터
  *
  * @author waterlove88@gmail.com
  * @since 2020.05.17

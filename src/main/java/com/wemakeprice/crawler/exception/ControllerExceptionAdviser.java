@@ -20,7 +20,12 @@ import java.net.BindException;
 @RestControllerAdvice
 public class ControllerExceptionAdviser {
 
-	// 기타 에러 처리 500
+	/**
+	 * 기타 에러 처리 : 500
+	 *
+	 * @param exception
+	 * @return
+	 */
 	@ExceptionHandler({Exception.class})
 	public ResponseEntity<ResultMaster> controllerExceptionHandler(Exception exception) {
 		return new ResponseEntity(
@@ -28,7 +33,12 @@ public class ControllerExceptionAdviser {
 				, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	// 잘못된 요청 처리 400
+	/**
+	 * 잘못된 요청 처리 : 400
+	 *
+	 * @param exception
+	 * @return
+	 */
 	@ExceptionHandler({BindException.class, MethodArgumentNotValidException.class, HttpMediaTypeNotSupportedException.class})
 	public ResponseEntity<ResultMaster> bindExceptionHandler(Exception exception) {
 		return new ResponseEntity(
@@ -36,7 +46,12 @@ public class ControllerExceptionAdviser {
 				, HttpStatus.BAD_REQUEST);
 	}
 
-	// 잘못된 메소드 요청 처리 405
+	/**
+	 * 잘못된 메소드 요청 : 405
+	 *
+	 * @param exception
+	 * @return
+	 */
 	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
 	public ResponseEntity<ResultMaster> notSupportExceptionHandler(Exception exception) {
 		return new ResponseEntity(

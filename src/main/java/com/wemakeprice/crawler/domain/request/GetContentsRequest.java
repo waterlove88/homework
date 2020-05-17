@@ -9,6 +9,10 @@ import javax.validation.constraints.Min;
 
 /**
  * 크롤링 데이터 요청 request
+ * <p>
+ * url : 크롤링 파싱 url
+ * type : 크롤링 파싱타입(excludeTag, allText)
+ * outputBundleUnit : 출력묶음단위
  *
  * @author waterlove88@gmail.com
  * @since 2020.05.17
@@ -17,24 +21,12 @@ import javax.validation.constraints.Min;
 @Setter
 public class GetContentsRequest {
 
-	// url
 	@URL
 	private String url;
 
-	// type (excludeTag, allText)
 	@TypeCheck
 	private String type;
 
-	// 출력묶음단위
 	@Min(1)
 	private int outputBundleUnit;
-
-	@Override
-	public String toString() {
-		return "GetContentsRequest{" +
-				"url='" + url + '\'' +
-				", type='" + type + '\'' +
-				", outputBundleUnit=" + outputBundleUnit +
-				'}';
-	}
 }

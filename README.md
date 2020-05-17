@@ -16,7 +16,6 @@
     
 ## 어플리케이션 버전
 * Spring boot : 1.5.9.RELEASE
-* String : 4.3.13.RELEASE
 * 빌드 도구 : maven
 
 ## API Request

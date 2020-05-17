@@ -1,0 +1,6 @@
+logging:
+  level:
+    org.springframework.web: ERROR
+    com.wemakeprice.crawler: DEBUG
+server:
+  port: 8080

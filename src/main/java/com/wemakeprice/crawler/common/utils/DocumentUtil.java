@@ -27,7 +27,7 @@ public class DocumentUtil {
 	 * document 객체를 type에 따라 String 을 얻는다.
 	 *
 	 * @param document
-	 * @param type (excludeTag : 태그 제외, allText : 모든 문자)
+	 * @param type     (excludeTag : 태그 제외, allText : 모든 문자)
 	 * @return String
 	 */
 	public String getDocumentText(Document document, String type) {

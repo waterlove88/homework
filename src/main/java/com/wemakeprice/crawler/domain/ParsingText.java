@@ -39,11 +39,11 @@ public class ParsingText {
 		if (alphabet.length() == 0 && number.length() == 0) {
 			return "";
 
-		// 추출된 알파벳만 있고 숫자가 없으면 숫자만 리턴
+			// 추출된 알파벳만 있고 숫자가 없으면 숫자만 리턴
 		} else if (alphabet.length() == 0) {
 			return number;
 
-		// 추출된 숫자만 있고 알파벳이 없으면 알파벳만 리턴
+			// 추출된 숫자만 있고 알파벳이 없으면 알파벳만 리턴
 		} else if (number.length() == 0) {
 			return alphabet;
 		}
@@ -78,7 +78,7 @@ public class ParsingText {
 	public String setAlphabet(String text) {
 
 		// 데이터가 없으면 빈 값 리턴
-		if(StringUtils.isEmpty(text)) {
+		if (StringUtils.isEmpty(text)) {
 			return "";
 		}
 
@@ -114,7 +114,7 @@ public class ParsingText {
 	public String setNumber(String text) {
 
 		// 데이터가 없으면 빈 값 리턴
-		if(StringUtils.isEmpty(text)) {
+		if (StringUtils.isEmpty(text)) {
 			return "";
 		}
 

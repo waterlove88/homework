@@ -31,13 +31,13 @@ public class ControllerExceptionAdviser {
 					new ResultMaster(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase())
 					, HttpStatus.BAD_REQUEST);
 
-		// 잘못된 메소드 요청 405
+			// 잘못된 메소드 요청 405
 		} else if (exception instanceof HttpRequestMethodNotSupportedException) {
 			return new ResponseEntity(
 					new ResultMaster(HttpStatus.METHOD_NOT_ALLOWED.value(), HttpStatus.METHOD_NOT_ALLOWED.getReasonPhrase())
 					, HttpStatus.METHOD_NOT_ALLOWED);
 
-		// 없는 request 요청 404
+			// 없는 request 요청 404
 		} else if (exception instanceof NoHandlerFoundException) {
 			return new ResponseEntity(
 					new ResultMaster(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND.getReasonPhrase())

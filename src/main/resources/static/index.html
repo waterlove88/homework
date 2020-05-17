@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form method="post">
+        URL
+        <input type="text" id="url" name="url" size="100"><br><br>
+
+        Type
+        <select id="type" name="type">
+            <option value="excludeTag">HTML 태그제외</option>
+            <option value="allText">Text 전체</option>
+        </select><br><br>
+
+        출력묶음단위 (자연수)
+        <input type="text" id="outputBundleUnit" name="outputBundleUnit"><br><br>
+
+        <input type="button" onclick="getContents()" value="출력">
+</form>
+
+<div id="quotient">
+</div>
+<div id="remainder">
+</div>
+
+<script>
+    function getContents(){
+        var data = {
+            url: document.getElementById('url').value,
+            type: document.getElementById('type').value,
+            outputBundleUnit: document.getElementById('outputBundleUnit').value
+        };
+
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var responseText = JSON.parse(this.responseText);
+
+                document.getElementById("quotient").innerText = "몫 : " + responseText.data.quotient;
+                document.getElementById("remainder").innerText = "나머지 : " + responseText.data.remainder;
+
+                console.log(responseText.data);
+            } else if (this.readyState == 4 && this.status == 400) {
+                alert("bad request");
+            } else if (this.readyState == 4 && this.status == 500) {
+                alert("server error");
+            }
+        };
+        xhr.open("POST", "http://localhost:8080/contents", true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify(data));
+    }
+</script>
+
+</body>
+</html>

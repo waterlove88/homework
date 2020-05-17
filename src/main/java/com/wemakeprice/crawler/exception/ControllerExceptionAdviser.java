@@ -16,6 +16,8 @@ public class ControllerExceptionAdviser {
 	@ExceptionHandler({Exception.class})
 	public ResultMaster controllerExceptionHandler(Exception exception) {
 
+		System.out.println("class : " + exception.getClass().getName());
+
 		if (exception instanceof BindException || exception instanceof MethodArgumentNotValidException) {
 			return new ResultMaster(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase());
 		} else if (exception instanceof HttpRequestMethodNotSupportedException) {

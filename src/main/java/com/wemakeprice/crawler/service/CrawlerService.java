@@ -5,7 +5,6 @@ import com.wemakeprice.crawler.common.utils.DocumentUtil;
 import com.wemakeprice.crawler.domain.ParsingText;
 import com.wemakeprice.crawler.domain.request.GetContentsRequest;
 import com.wemakeprice.crawler.domain.response.GetContentsResponse;
-import lombok.extern.slf4j.Slf4j;
 import org.jsoup.nodes.Document;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Service;
  * @author waterlove88@gmail.com
  * @since 2020.05.17
  */
-@Slf4j
 @Service
 public class CrawlerService {
 
@@ -38,20 +36,14 @@ public class CrawlerService {
 		try {
 			document = documentUtil.getDocument(url);
 		} catch (Exception e) {
-			e.printStackTrace();
-			// return
 			return new ResponseEntity(
 					new ResultMaster<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage())
 					, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		log.debug("document : " + document);
-
 		// 타입에 따라 파싱처리
 		// 알파벳은 사전+대문자우선 순으로, 숫자는 01234 순으로 정렬
 		ParsingText parsingText = new ParsingText(documentUtil.getDocumentText(document, type));
-
-		log.debug("parsingText : " + parsingText);
 
 		// 추출된 데이터를 통해 교차출력 데이터를 가져와 응답 객체 생성 후 리턴
 		return new ResponseEntity(

@@ -8,7 +8,6 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.net.BindException;
 
@@ -21,32 +20,27 @@ import java.net.BindException;
 @RestControllerAdvice
 public class ControllerExceptionAdviser {
 
+	// 기타 에러 처리 500
 	@ExceptionHandler({Exception.class})
 	public ResponseEntity<ResultMaster> controllerExceptionHandler(Exception exception) {
-
-		// 잘못된 요청 400
-		if (exception instanceof BindException || exception instanceof MethodArgumentNotValidException
-				|| exception instanceof HttpMediaTypeNotSupportedException) {
-			return new ResponseEntity(
-					new ResultMaster(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase())
-					, HttpStatus.BAD_REQUEST);
-
-			// 잘못된 메소드 요청 405
-		} else if (exception instanceof HttpRequestMethodNotSupportedException) {
-			return new ResponseEntity(
-					new ResultMaster(HttpStatus.METHOD_NOT_ALLOWED.value(), HttpStatus.METHOD_NOT_ALLOWED.getReasonPhrase())
-					, HttpStatus.METHOD_NOT_ALLOWED);
-
-			// 없는 request 요청 404
-		} else if (exception instanceof NoHandlerFoundException) {
-			return new ResponseEntity(
-					new ResultMaster(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND.getReasonPhrase())
-					, HttpStatus.NOT_FOUND);
-		}
-
-		// 기타 에러는 500 처리
 		return new ResponseEntity(
 				new ResultMaster(HttpStatus.INTERNAL_SERVER_ERROR.value(), exception.getMessage())
 				, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+	// 잘못된 요청 처리 400
+	@ExceptionHandler({BindException.class, MethodArgumentNotValidException.class, HttpMediaTypeNotSupportedException.class})
+	public ResponseEntity<ResultMaster> bindExceptionHandler(Exception exception) {
+		return new ResponseEntity(
+				new ResultMaster(HttpStatus.BAD_REQUEST.value(), exception.getMessage())
+				, HttpStatus.BAD_REQUEST);
+	}
+
+	// 잘못된 메소드 요청 처리 405
+	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+	public ResponseEntity<ResultMaster> notSupportExceptionHandler(Exception exception) {
+		return new ResponseEntity(
+				new ResultMaster(HttpStatus.METHOD_NOT_ALLOWED.value(), exception.getMessage())
+				, HttpStatus.METHOD_NOT_ALLOWED);
 	}
 }

@@ -3,6 +3,3 @@ logging:
     com.wemakeprice.crawler: INFO
 server:
   port: 8080
-spring:
-  mvc:
-    throw-exception-if-no-handler-found: true

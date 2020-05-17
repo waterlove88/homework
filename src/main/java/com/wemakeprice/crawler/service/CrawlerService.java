@@ -8,13 +8,26 @@ import com.wemakeprice.crawler.domain.response.GetContentsResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.nodes.Document;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+/**
+ * 크롤링 service
+ *
+ * @author waterlove88@gmail.com
+ * @since 2020.05.17
+ */
 @Slf4j
 @Service
 public class CrawlerService {
 
-	public ResultMaster<GetContentsResponse> getContents(GetContentsRequest getContentsRequest) {
+	/**
+	 * 요청 request 로 크롤링 처리
+	 *
+	 * @param getContentsRequest
+	 * @return ResponseEntity<ResultMaster>
+	 */
+	public ResponseEntity<ResultMaster> getContents(GetContentsRequest getContentsRequest) {
 		DocumentUtil documentUtil = new DocumentUtil();
 		String url = getContentsRequest.getUrl();
 		String type = getContentsRequest.getType();
@@ -27,18 +40,23 @@ public class CrawlerService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			// return
-			return new ResultMaster<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
+			return new ResponseEntity(
+					new ResultMaster<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage())
+					, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		// 타입에 따라 파싱처리
-		// 알파벳은 AaBbCc 순으로, 숫자는 01234 순으로 정렬
-		ParsingText parsingText = documentUtil.getDocumentText(document, type);
+		log.debug("document : " + document);
 
-		return new ResultMaster<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), new GetContentsResponse(parsingText.getParsingText(), outputBundleUnit));
-		// 그리고 교차출력(영어, 숫자, 영어, 숫자 순)
-		// 묶음 단위로 출력
-		// 1 이면 몫 = 문장, 나머지 0
-		// 문장보다 크면 몫 = 0, 나머지 = 문장
+		// 타입에 따라 파싱처리
+		// 알파벳은 사전+대문자우선 순으로, 숫자는 01234 순으로 정렬
+		ParsingText parsingText = new ParsingText(documentUtil.getDocumentText(document, type));
+
+		log.debug("parsingText : " + parsingText);
+
+		// 추출된 데이터를 통해 교차출력 데이터를 가져와 응답 객체 생성 후 리턴
+		return new ResponseEntity(
+				new ResultMaster<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), new GetContentsResponse(parsingText.getParsingText(), outputBundleUnit))
+				, HttpStatus.OK);
 
 	}
 }

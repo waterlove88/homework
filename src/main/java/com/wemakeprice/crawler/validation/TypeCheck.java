@@ -15,7 +15,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Documented
 @Constraint(validatedBy = TypeCheckValidator.class)
 public @interface TypeCheck {
-	String message() default "타입 입력 값을 확인해주세요.";
+	String message() default "";
 
 	Class<?>[] groups() default {};
 
